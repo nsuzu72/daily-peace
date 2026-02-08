@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/daily-peace/static/css/main.6d36cf03.css",
+    "main.js": "/daily-peace/static/js/main.9e9fd73b.js",
+    "index.html": "/daily-peace/index.html",
+    "main.6d36cf03.css.map": "/daily-peace/static/css/main.6d36cf03.css.map",
+    "main.9e9fd73b.js.map": "/daily-peace/static/js/main.9e9fd73b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d36cf03.css",
+    "static/js/main.9e9fd73b.js"
+  ]
+}
