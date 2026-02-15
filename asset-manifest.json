@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/daily-peace/static/css/main.6d36cf03.css",
-    "main.js": "/daily-peace/static/js/main.95ce5d29.js",
+    "main.js": "/daily-peace/static/js/main.c3d1bac8.js",
     "index.html": "/daily-peace/index.html",
     "main.6d36cf03.css.map": "/daily-peace/static/css/main.6d36cf03.css.map",
-    "main.95ce5d29.js.map": "/daily-peace/static/js/main.95ce5d29.js.map"
+    "main.c3d1bac8.js.map": "/daily-peace/static/js/main.c3d1bac8.js.map"
   },
   "entrypoints": [
     "static/css/main.6d36cf03.css",
-    "static/js/main.95ce5d29.js"
+    "static/js/main.c3d1bac8.js"
   ]
 }
