@@ -1,26 +1,46 @@
-import quotesData from '../data/quotes.json';
+// src/hooks/useDailyContent.ts
+import { useState, useEffect, useCallback } from 'react';
+// Corrected import: No 'src/' prefix, just relative path
+import quotesData from '../data/quotes.json'; 
+
+const BATCH_SIZE = 5;
 
 export const useDailyContent = () => {
-  // 1. Get today's date string (e.g., "2026-02-08") 
-  const today = new Date().toISOString().split('T')[0];
+  const [displayQuotes, setDisplayQuotes] = useState<any[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // 2. Simple hash function to turn the date string into a consistent number
-  const dateHash = today.split('-').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  useEffect(() => {
+    // 1. Generate date-based seed
+    const today = new Date();
+    const dateSeed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+    
+    // 2. Find starting index based on the seed
+    const startIndex = dateSeed % quotesData.length;
+    
+    // 3. Load the first batch
+    const initialBatch = quotesData.slice(startIndex, startIndex + BATCH_SIZE).map((q, i) => ({
+      ...q,
+      // Use the index + seed to ensure a unique but "locked" image for the day
+      bg: `https://picsum.photos/seed/${dateSeed + i}/1920/1080`
+    }));
 
-  // 3. Select a quote based on the date hash [cite: 20]
-  const quote = quotesData[dateHash % quotesData.length];
+    setDisplayQuotes(initialBatch);
+    setCurrentIndex(startIndex + BATCH_SIZE);
+  }, []);
 
-  // 4. Use a curated set of Unsplash IDs [cite: 15]
-  // You can expand this list with any Unsplash IDs you like
-  const photoIds = [
-    'photo-1464822759023-fed622ff2c3b', // Mountains
-    'photo-1470770841072-f978cf4d019e', // Landscape
-    'photo-1501854140801-50d01698950b', // Nature
-    'photo-1441974231531-c6227db76b6e'  // Forest
-  ];
-  
-  const photoId = photoIds[dateHash % photoIds.length];
-  const backgroundImage = `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=1920&q=80`;
+  const loadMore = useCallback(() => {
+    // If we reach the end of the JSON, we stop
+    if (currentIndex >= quotesData.length) return;
 
-  return { quote, backgroundImage };
+    const nextBatch = quotesData.slice(currentIndex, currentIndex + BATCH_SIZE).map((q, i) => ({
+      ...q,
+      // Use timestamp for unique backgrounds for new "scrolled" quotes
+      bg: `https://picsum.photos/seed/${Date.now() + i}/1920/1080`
+    }));
+
+    setDisplayQuotes(prev => [...prev, ...nextBatch]);
+    setCurrentIndex(prev => prev + BATCH_SIZE);
+  }, [currentIndex]);
+
+  return { displayQuotes, loadMore, hasMore: currentIndex < quotesData.length };
 };

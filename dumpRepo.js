@@ -3,7 +3,7 @@ const path = require("path");
 
 const ROOT_DIR = process.cwd();
 const OUTPUT_FILE = "repo_dump.txt";
-const ALLOWED_EXTENSIONS = [".html", ".css", ".js", ".json"];
+const ALLOWED_EXTENSIONS = [".html", ".css", ".js", ".json", ".ts", ".tsx"];
 
 let output = "PROJECT: NoterGitter\n\n";
 
